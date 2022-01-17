@@ -1,5 +1,6 @@
 ﻿open System.IO
 open type System.Environment
+open FSharp.Data
 
 let puts (str: string) = printfn $"{str}"
 
@@ -38,10 +39,22 @@ let parseLineIntoEntry (line: string) =
       {| MessageName = subParts.[0]
          Payload = subParts.[1] |}
 
-File.ReadLines mostRecentLogFile
-|> Seq.filter (fun line ->
-  line.Split(" ")
-  |> Array.exists (fun part -> part.IndexOf("UnityCrossThreadLogger") > -1))
-|> Seq.map parseLineIntoEntry
-|> Seq.filter (fun e -> e.IsSome)
-|> Seq.iter (fun e -> puts e.Value.Payload)
+let testReadFile () =
+  File.ReadLines mostRecentLogFile
+  |> Seq.filter (fun line ->
+    line.Split(" ")
+    |> Array.exists (fun part -> part.IndexOf("UnityCrossThreadLogger") > -1))
+  |> Seq.map parseLineIntoEntry
+  |> Seq.filter (fun e -> e.IsSome)
+  |> Seq.iter (fun e -> puts e.Value.Payload)
+
+// testReadFile()
+
+[<Literal>]
+let ResolutionFolder = __SOURCE_DIRECTORY__
+
+type DraftStats = CsvProvider<"data/stx-quick-draft.tsv", ResolutionFolder=ResolutionFolder>
+let draftStats = new DraftStats()
+
+for row in draftStats.Rows do
+  puts row.Name
