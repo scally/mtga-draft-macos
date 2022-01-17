@@ -56,5 +56,13 @@ let ResolutionFolder = __SOURCE_DIRECTORY__
 type DraftStats = CsvProvider<"data/stx-quick-draft.tsv", ResolutionFolder=ResolutionFolder>
 let draftStats = new DraftStats()
 
+type CardData = CsvProvider<"data/card_list.csv", ResolutionFolder=ResolutionFolder>
+let cards = new CardData()
+
 for row in draftStats.Rows do
-  puts row.Name
+  let filtered =
+    (cards.Filter(fun card -> card.Name = row.Name))
+      .Rows
+    |> Seq.head
+
+  puts $"{row.Name} {filtered.Id}"

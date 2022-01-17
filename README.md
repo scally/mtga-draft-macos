@@ -4,6 +4,8 @@ Use html data with winrates, with regex find/replace, find "[^\S\t]\n" and repla
 Set tabs/spaces setting to use tabs before manually editing
 If the CSV type provider acts weird, there's likely inconsistent tabs in the sample file
 
+`card_list.csv` comes from 17lands dataset
+
 # Interesting Events
 
 ### <== Event_Join
