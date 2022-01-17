@@ -1,3 +1,7 @@
+# Generating data
+
+Use html data with winrates, with regex find/replace, find "[^\S\t]\n" and replace with "\t"
+
 # Interesting Events
 
 ### <== Event_Join
